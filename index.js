@@ -3,6 +3,18 @@
     const app = express()
 
     const path = require('path')
+    //add template engine
+    const hbs = require('express-handlebars');
+    //setup template engine directory and files extensions
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('view.engine','hbs');
+    app.engine('hbs',hbs.engine({
+        extname:'hbs',
+        defaultLayout:'main',
+        layoutsDir:__dirname+ '/views/layouts/',
+    }))
+    //setup static public directory
+    app.use(express.static('public'));
 
     const mysql = require('mysql')
 
@@ -10,7 +22,7 @@
     app.use(bodyParser.urlencoded({extended: true}))
 
 //create database connection
-var con = mysql.createConnection({
+let con = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "qwerty",
@@ -19,10 +31,10 @@ var con = mysql.createConnection({
 
 con.connect(function(err) {
     if (err) throw err;
-    console.log("Connect to joga_mysql db")
+    console.log("Connected to joga_mysql db")
 })
 
 //app start point
-app.listen(3000, () => {
-    console.log('App is started at http://localhost:3306')
+app.listen(3307, (localhost) => {
+    console.log('App is started at http://localhost:3307')
 });
