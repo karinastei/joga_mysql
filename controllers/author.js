@@ -3,8 +3,8 @@ const con = require('../utils/db');
 
 //show author by this slug
 const getAuthor = (req, res) => {
-    let query = `SELECT * FROM article JOIN author ON article.author_id = author.id WHERE author_id ="${req.params.author_id}"`
-    let getName = `SELECT author_name FROM author WHERE id ="${req.params.author_id}"`
+    let query = `SELECT * FROM article INNER JOIN author ON article.author_id = author.id WHERE author_id ="${req.params.author_id}"`
+    let getName = `SELECT author_name FROM author WHERE author.id ="${req.params.author_id}"`
     let author
     con.query(query, (err, result) => {
         if (err) throw err;
