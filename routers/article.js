@@ -8,5 +8,6 @@ const articleController = require('../controllers/article');
 router.get('/', articleController.getAllArticles);
 router.get('/article/:slug', articleController.getArticleBySlug);
 
+
 //export article router for using in default application file
 module.exports = router;

@@ -19,32 +19,14 @@ app.use(express.static('public'));
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended: true}))
 
-const articleRoutes = require('./routes/article');//import article route
+const articleRoutes = require('./routers/article');//import article route
+const authorRoutes = require('./routers/author');//import author route
 
-//to use article routes
+//to use article routers
 app.use('/', articleRoutes);
-app.use('/article', articleRoutes)
-
-//show author by this slug
-app.get('/author_id/:author_id', (req, res) => {
-    let query = `SELECT * FROM article JOIN author ON article.author_id = author.id WHERE author_id ="${req.params.author_id}"`
-    let getName = `SELECT author_name FROM author WHERE id ="${req.params.author_id}"`
-    let author
-    con.query(query, (err, result) => {
-        if (err) throw err;
-        author = result
-        console.log(author)
-        con.query(getName, (err, nameResult) => {
-            if (err) throw err;
-            const author_name = nameResult[0].author_name;
-            console.log(author_name)
-            res.render('author', {
-                author: author,
-                author_name: author_name
-            });
-        });
-    });
-});
+app.use('/article', articleRoutes);
+app.use ('/author_id', authorRoutes)
+//
 //app start point
 app.listen(3000, (localhost) => {
     console.log('App is started at http://localhost:3000')
