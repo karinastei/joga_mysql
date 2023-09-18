@@ -1,16 +1,19 @@
 //import database connection
-const con = require('../utils/db');
+const Article = require('../models/article.model.js');
 
 //show all articles - index page
 const getAllArticles = (req, res) => {
-    let query = "SELECT * FROM article, author";
-    let articles = []
-    con.query(query, (err, result) => {
-        if (err) throw err;
-        articles = result
-        res.render('index', {
-            articles: articles
-        })
+    Article.getAll((err, data) => {
+        if (err) {
+            res.status(500).send({
+                message : err.message || 'Some error occurred retrieving articles data'
+            })
+        } else {
+            console.log(data)
+            res.render('index', {
+                articles: data
+            })
+        }
     })
 };
 
