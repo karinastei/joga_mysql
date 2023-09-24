@@ -25,7 +25,7 @@ const authorRoutes = require('./routers/author');//import author route
 //to use article routers
 app.use('/', articleRoutes);
 app.use('/article', articleRoutes);
-app.use ('/author_id', authorRoutes)
+app.use('/author_id', authorRoutes);
 //
 //app start point
 app.listen(3000, (localhost) => {

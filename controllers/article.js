@@ -1,4 +1,3 @@
-//import database connection
 const Article = require('../models/article.model');
 
 //show all articles - index page
