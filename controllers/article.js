@@ -5,7 +5,7 @@ const getAllArticles = (req, res) => {
     Article.getAll((err, data) => {
         if (err) {
             res.status(500).send({
-                message : err.message || 'Some error occurred retrieving articles data'
+                message: err.message || 'Some error occurred retrieving articles data'
             })
         } else {
             console.log(data)
@@ -18,18 +18,18 @@ const getAllArticles = (req, res) => {
 
 //show article by this slug
 const getArticleBySlug = (req, res) => {
-   Article.getBySlug(req.params.slug, (err, data) => {
-       if (err) {
-           res.status(500).send({
-               message : err.message || 'Some error occurred retrieving article data'
-           })
-       } else {
-           console.log(data)
-           res.render('article', {
-               article: data
-           })
+    Article.getBySlug(req.params.slug, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || 'Some error occurred retrieving article data'
+            })
+        } else {
+            console.log(data)
+            res.render('article', {
+                article: data
+            })
         }
-     })
+    })
 };
 
 //create new article
@@ -49,7 +49,7 @@ const createNewArticle = (req, res) => {
     Article.createNew(newArticle, (err, data) => {
         if (err) {
             res.status(500).send({
-                message : err.message || 'Some error occurred sending article data'
+                message: err.message || 'Some error occurred sending article data'
             })
         } else {
             console.log(data)
@@ -57,6 +57,24 @@ const createNewArticle = (req, res) => {
         }
     })
 };
+
+const showArticle = (req, res) => {
+    Article.getById(req.params.id, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || 'Some error occurred getting article by id'
+            })
+        } else {
+            console.log(data)
+            res.render('article', {
+                article: data
+            })
+        }
+    })
+}
+
+const updateArticle = (req, res) => {
+}
 
 //display article form
 const showNewArticleForm = (req, res) => {
@@ -67,5 +85,7 @@ module.exports = {
     getAllArticles,
     getArticleBySlug,
     createNewArticle,
-    showNewArticleForm
+    showNewArticleForm,
+    showArticle,
+    updateArticle
 };

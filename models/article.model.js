@@ -59,4 +59,21 @@ Article.createNew = (newArticle, result) => {
     });
 }
 
+//get article by id
+Article.getById = (id, result) => {
+    let getArticleQuery = `SELECT article.*, author.author_name FROM article INNER JOIN author ON article.author_id = author.id WHERE article.id = "${id}"`
+    con.query(getArticleQuery, (err, res) => {
+        if (err) {
+            console.log("Error in Article.getById: ", err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("Article.getById got the following article: ", res[0]);
+            result(null, res[0]);
+        }
+    });
+}
+
 module.exports = Article;
