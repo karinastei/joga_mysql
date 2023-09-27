@@ -35,8 +35,6 @@ const getArticleBySlug = (req, res) => {
 //create new article
 const createNewArticle = (req, res) => {
     //new article from POST data (example from form)
-    console.log('new article')
-
     const newArticle = new Article({
         name: req.body.name,
         slug: req.body.slug,
@@ -57,7 +55,6 @@ const createNewArticle = (req, res) => {
         }
     })
 };
-
 const showArticle = (req, res) => {
     Article.getById(req.params.id, (err, data) => {
         if (err) {
@@ -66,14 +63,35 @@ const showArticle = (req, res) => {
             })
         } else {
             console.log(data)
-            res.render('article', {
+            res.render('edit', {
                 article: data
             })
         }
     })
 }
-
 const updateArticle = (req, res) => {
+    //update article from POST data
+    const updatedArticle = new Article({
+        id: req.params.id,
+        name: req.body.name,
+        slug: req.body.slug,
+        image: req.body.image,
+        body: req.body.body,
+        published: req.body.published,
+        author_id: req.body.author_id
+    })
+
+    Article.updateById(updatedArticle, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || 'Some error occurred updating article data'
+            })
+        } else {
+            console.log(data)
+            //shows the updated article
+            res.redirect(`/article/${req.body.slug}`)
+        }
+    })
 }
 
 //display article form

@@ -3,6 +3,7 @@ const con = require('../utils/db');
 
 //constructor
 const Article = function(article){
+    this.id = article.id
     this.name = article.name
     this.slug = article.slug
     this.image = article.image
@@ -74,6 +75,21 @@ Article.getById = (id, result) => {
             result(null, res[0]);
         }
     });
+}
+
+//update article by id
+Article.updateById = (updatedArticle, result) => {
+    let updateArticleQuery = `UPDATE article SET name = "${updatedArticle.name}", slug = "${updatedArticle.slug}", image = "${updatedArticle.image}", body = "${updatedArticle.body}", published = "${updatedArticle.published}", author_id = "${updatedArticle.author_id}" WHERE id = "${updatedArticle.id}"`
+    con.query(updateArticleQuery, (err, res) => {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        console.log("Edited article: ", {id: res.insertId, ...updatedArticle});
+        result(null, {id: res.insertId, ...updatedArticle})
+    });
+
 }
 
 module.exports = Article;
