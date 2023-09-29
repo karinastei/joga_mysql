@@ -24,7 +24,7 @@ Article.getAll = (result) => {
         }
 
         articles = res
-        console.log("articles: ", articles);
+        //console.log("articles: ", articles);
         result(null, articles);
     })
 };
@@ -89,7 +89,20 @@ Article.updateById = (updatedArticle, result) => {
         console.log("Edited article: ", {id: res.insertId, ...updatedArticle});
         result(null, {id: res.insertId, ...updatedArticle})
     });
+}
 
+//update article by id
+Article.deleteById = (id, result) => {
+    let deleteArticleQuery = `DELETE FROM article WHERE id = "${id}"`
+    con.query(deleteArticleQuery, (err, res) => {
+        if(err) {
+            console.log("error:", err);
+            result(err, null);
+            return;
+        }
+        console.log("Deleted article:", id);
+        result(null, res)
+    });
 }
 
 module.exports = Article;

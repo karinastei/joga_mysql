@@ -88,11 +88,26 @@ const updateArticle = (req, res) => {
             })
         } else {
             console.log(data)
-            //shows the updated article
-            res.redirect(`/article/${req.body.slug}`)
+            //shows all the articles
+            res.redirect(`/`)
         }
     })
 }
+
+const deleteArticle = (req, res) => {
+    Article.deleteById(req.params.id, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || 'Some error occurred deleting article data'
+            })
+        } else {
+            console.log(data)
+            //shows all the articles
+            res.redirect(`/`)
+        }
+    })
+}
+
 
 //display article form
 const showNewArticleForm = (req, res) => {
@@ -105,5 +120,6 @@ module.exports = {
     createNewArticle,
     showNewArticleForm,
     showArticle,
-    updateArticle
+    updateArticle,
+    deleteArticle
 };
